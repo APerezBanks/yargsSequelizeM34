@@ -9,11 +9,12 @@ exports.addMovie = async (movieObj) => {
 };
 
 exports.listMovies = async (filterObj) => {
+    console.log("filterObj: ", filterObj);
     try {
-        if (filterObj) {
-            return await Movie.findOne({where: filterObj});
-        } else {
+        if (filterObj.undefined === undefined) {
             return await Movie.findAll();
+        } else {
+            return await Movie.findOne({where: filterObj});
         }
     } catch (error) {
         console.log(error);
