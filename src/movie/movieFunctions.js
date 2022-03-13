@@ -9,16 +9,42 @@ exports.addMovie = async (movieObj) => {
 };
 
 exports.listMovies = async (filterObj) => {
-    console.log("filterObj: ", filterObj);
+    // console.log("filterObj: ", filterObj);
     try {
-        if (filterObj.title || filterObj.actor) {
-            return await Movie.findOne({where: filterObj});
+        if (filterObj && (filterObj.title || filterObj.actor)) {
+            return await Movie.findAll({where: filterObj});
+
         } else {
             return await Movie.findAll();
         }
+        
     } catch (error) {
         console.log(error);
     }
-};
 
+    exports.updateActor = async (inputObj) => {
+        try {
+            return await Movie.update({ actor: inputObj.newActor }, {
+                where: {
+                  actor: inputObj.oldActor
+                }
+              });
+        } catch (error) {
+            console.log(error, "It did not update")
+        }
+    }
+
+    
+}
+    exports.deleteEntry = async (filterObj) => {
+    try {
+        return await Movie.destroy({
+            where: filterObj});
+        
+        
+        
+        } catch (error) {
+        console.log(error, "It did not update")
+ }
+};
 
